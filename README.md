@@ -1,9 +1,9 @@
-# CleanerBot Over Lightsail using Terraform + Ansible
+# CleanerBot Over Lightsail using Terraform & Ansible
 
 ## How to Clone?
 
 ```
-git clone https://github.com/dps0340/cleanerbot-terraform-ansible --recurse-submodules
+git clone https://github.com/DPS0340/Cleanerbot-Terraform-Ansible --recurse-submodules
 ```
 
 ## Install dependencies using nix
