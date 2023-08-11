@@ -1,7 +1,9 @@
 ---
-- name: Setup ovpn server
-  hosts: ovpn_server
+- name: Setup CleanerBot server
+  hosts: clb_server
   become_user: root
+  vars_files:
+    - ./ansible-env.yaml
   tasks:
     - name: Set OS Time
       become: true
@@ -13,17 +15,29 @@
       become: true
       ansible.builtin.apt:
         name: curl
-    - name: Set up openvpn install script
+    - name: Install docker
       shell: |
-        rm -f openvpn-install.sh
-        curl -O https://raw.githubusercontent.com/angristan/openvpn-install/master/openvpn-install.sh
-        chmod +x openvpn-install.sh
-    - name: Install openvpn using script
-      shell: |
-        sudo AUTO_INSTALL=y PROTOCOL_CHOICE=2 ENDPOINT=$(curl ifconfig.me) DNS=11 ~/openvpn-install.sh
-    - name: Copy Openvpn configuration from server
-      ansible.builtin.fetch:
-        src: ~/client.ovpn
-        dest: ./
-        flat: true
+        curl -fsSL https://get.docker.com -o get-docker.sh
+        sudo sh get-docker.sh
+        rm -rf get-docker.sh
 
+        sudo chmod 666 /var/run/docker.sock
+    - name: Install docker compose
+      shell: |
+        sudo rm -rf /usr/local/bin/docker-compose /usr/bin/docker-compose
+        sudo curl -L "https://github.com/docker/compose/releases/download/v2.20.3/docker-compose-linux-x86_64" -o /usr/local/bin/docker-compose
+        sudo chmod +x /usr/local/bin/docker-compose
+        sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
+    - name: Install git
+      become: true
+      ansible.builtin.apt:
+        name: git
+    - name: Clone CleanerBot
+      shell: |
+        git clone https://github.com/DPS0340/CleanerBot
+    - name: Build & Run CleanerBot
+      shell: |
+        cd CleanerBot
+        sudo -E docker compose up -d --build
+      environment:
+        CLEANERBOT_TOKEN: "{{ CLEANERBOT_TOKEN }}"
