@@ -2,3 +2,5 @@ terraform*
 .terraform*
 client.ovpn
 inventory
+.env
+ansible-env.yaml
