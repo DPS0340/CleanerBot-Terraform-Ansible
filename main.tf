@@ -36,15 +36,22 @@ resource "aws_lightsail_instance_public_ports" "clb_server" {
 
   port_info {
     protocol  = "tcp"
-    from_port = 1194
-    to_port   = 1194
+    from_port = 8085
+    to_port   = 8085
   }
 
   port_info {
-    protocol  = "udp"
-    from_port = 1194
-    to_port   = 1194
+    protocol  = "tcp"
+    from_port = 8086
+    to_port   = 8086
   }
+
+  port_info {
+    protocol  = "tcp"
+    from_port = 8087
+    to_port   = 8087
+  }
+
 }
 
 resource "null_resource" "ansible_exec" {
