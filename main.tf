@@ -91,3 +91,7 @@ resource "null_resource" "ansible_exec" {
     }
 }
 
+output "server_ip" {
+  value = aws_lightsail_instance.clb_server.public_ip_address
+}
+
