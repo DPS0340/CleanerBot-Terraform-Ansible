@@ -3,7 +3,7 @@
 ## How to Clone?
 
 ```
-git clone https://github.com/DPS0340/Cleanerbot-Terraform-Ansible --recurse-submodules
+git clone https://github.com/DPS0340/Cleanerbot-Terraform-Ansible
 ```
 
 ## Install dependencies using nix
