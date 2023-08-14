@@ -68,7 +68,7 @@ resource "null_resource" "ansible_exec" {
 			export ANSIBLE_PERSISTENT_COMMAND_TIMEOUT=9999
 			export ANSIBLE_HOST_KEY_CHECKING=False 
 
-			rm -f inventory client.clb
+			rm -f inventory
 
             echo "clb_server ansible_port=22 ansible_host=$clb_ip ansible_user=$clb_user ansible_ssh_private_key_file=~/.ssh/clb_server" > inventory
             
