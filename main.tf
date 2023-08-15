@@ -91,6 +91,25 @@ resource "null_resource" "ansible_exec" {
     }
 }
 
+resource "null_resource" "change_hosts_local_exec" {
+    depends_on = [null_resource.ansible_exec]
+    provisioner "local-exec" {
+		working_dir = "${path.module}"
+        command = <<EOF
+			set -x
+
+			cd CleanerBot/host-manager
+
+			rm -f index-tf.ts
+			sed -i 's/"127.0.0.1"/"$clb_ip"/g' index.ts > index-tf.ts
+
+			deno run index-tf.ts
+
+			set +x
+        EOF
+    }
+}
+
 output "server_ip" {
   value = aws_lightsail_instance.clb_server.public_ip_address
 }
