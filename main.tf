@@ -101,10 +101,11 @@ resource "null_resource" "change_hosts_local_exec" {
 			cd CleanerBot/host-manager
 
 			rm -f index-tf.ts
-			sed -i 's/"127.0.0.1"/"$clb_ip"/g' index.ts > index-tf.ts
+			sed "s/\"127.0.0.1\"/\"$clb_ip\"/g" index.ts > index-tf.ts
 
-			deno run index-tf.ts
+			sudo deno run --allow-all --no-check index-tf.ts
 
+			rm -f index-tf.ts
 			set +x
         EOF
     }
