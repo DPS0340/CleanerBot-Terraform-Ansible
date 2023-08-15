@@ -4,4 +4,5 @@ with import <nixpkgs>{};
 	terraform
 	openssh
 	ansible_2_13
+	deno
 ]
