@@ -97,15 +97,21 @@ resource "null_resource" "change_hosts_local_exec" {
 		working_dir = "${path.module}"
         command = <<EOF
 			set -x
+			export clb_ip=${aws_lightsail_instance.clb_server.public_ip_address}
 
 			cd CleanerBot/host-manager
 
 			rm -f index-tf.ts
-			sed "s/\"127.0.0.1\"/\"$clb_ip\"/g" index.ts > index-tf.ts
+			sed "s/127.0.0.1/$clb_ip/g" index.ts > index-tf.ts
 
+			cat index-tf.ts
+
+			echo Please input sudo password:
 			sudo deno run --allow-all --no-check index-tf.ts
 
 			rm -f index-tf.ts
+
+			unset clb_ip
 			set +x
         EOF
     }
