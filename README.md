@@ -20,11 +20,16 @@ Make sure your nix package manager installed!
 export CLEANERBOT_TOKEN=$YOUR_TOKEN
 ```
 
-
 ## Init SSH key for Lightsail
 
 ```
 ./init-ssh-key.sh
+```
+
+## Terraform Init
+
+```
+./init.sh
 ```
 
 ## Provision CleanerBot over Lightsail instance
